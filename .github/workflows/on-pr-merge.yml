@@ -42,23 +42,28 @@ jobs:
       - name: Use Built-in Gradle Setup
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 'current'  # Ensures Gradle is installed
+          gradle-version: 'current'
 
-      - name: Verify Gradle Wrapper Files
-        run: ls -la gradlew || echo "gradlew not found!"
-
-      - name: Reinstall Gradle Wrapper
+      - name: Install Gradle Wrapper
         run: gradle wrapper
 
-      - name: Verify Gradle Wrapper Files Again
+      - name: Verify Gradle Wrapper
         run: ls -la gradlew || echo "gradlew not found!"
 
-      - name: Grant execute permissions for Gradle Wrapper
+      - name: Grant Execute for Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Clean
+      - name: Clean - Gradle
         run: ./gradlew clean
 
-      - name: Build with Tests
+      - name: Test - Gradle
+        run: ./gradlew test
+
+      - name: Build - Gradle
         run: ./gradlew build
 
+      - name: Upload Custom Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: micronaut-app-chase-jar
+          path: build/libs/*.jar
