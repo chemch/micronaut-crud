@@ -50,7 +50,7 @@ jobs:
       - name: Use Built in Gradle Setup
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '18.11'
+          gradle-version: '8.12.1'
 
       - name: Grant Execute on Gradle
         run: chmod +x gradlew
