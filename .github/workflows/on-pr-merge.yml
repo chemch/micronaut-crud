@@ -51,14 +51,14 @@ jobs:
         with:
           gradle-version: '8.11'
 
-      - name: Grant Execute on Gradle
+      - name: Grant execute permissions for Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Gradle - Build
-        run: ./gradlew build
+      - name: Verify Gradle Wrapper Files
+        run: ls -la gradle/wrapper/
 
-      - name: Gradle - Test
-        run: ./gradlew test
+      - name: Build and Test
+        run: ./gradlew build
 
       - name: Notification of Moving Forward to Upload
         run: echo "Moving to Upload for attempt - ${{github.run_attempt}}"
