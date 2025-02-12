@@ -12,14 +12,23 @@ on:
       - main
 
 jobs:
-  build:
+  checkout:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
 
     steps:
-      - run: echo "Merge detected on ${{github.repository}} owned by ${{github.repository_owner}} due to ${{github.event}}"
-
+      - run: echo "Checking out ${{github.repository}} due to ${{github.event}}"
 
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - run: echo "Checking out ${{github.repository}} due to ${{github.event}}"
+
+      - name: Prepare Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - run: echo "Complete with Status - ${{github.action_status}}"
 
