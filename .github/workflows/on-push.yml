@@ -1,0 +1,10 @@
+name: cs686-auto-build-test
+
+on: [push]
+
+jobs:
+  Ack-Push:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - run: echo "Push detected on ${{github.repository}} owned by ${{github.repository_owner}}"
