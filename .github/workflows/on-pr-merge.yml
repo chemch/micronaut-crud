@@ -55,9 +55,9 @@ jobs:
       - name: Verify Gradle Wrapper Files
         run: ls -la gradle/wrapper/
 
-#      - name: Build and Test
-#        run: ./gradlew build
-#
+      - name: Build and Test
+        run: ./gradlew build
+
 #      - name: Notification of Moving Forward to Upload
 #        run: echo "Moving to Upload for attempt - ${{github.run_attempt}}"
 #
