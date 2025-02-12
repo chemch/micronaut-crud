@@ -12,9 +12,23 @@ on:
       - main
 
 jobs:
-  checkout:
+  build-test-upload:
     #if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: mn_playground
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root --password=password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - run: echo "Checking out ${{github.repository}} due to ${{github.event}}"
@@ -30,5 +44,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - run: echo "Complete with Status - ${{github.action_status}}"
+      - run: echo "Moving to Gradle Build for ${{github.base_ref}}"
 
+      - name: Grant Execute on Gradle
+        run: chmod +x gradlew
+
+      - name: Build / Test
+        run: ./gradlew build
+#
+#      - name: Upload JAR via GitHub Upload Action
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: micronaut-app
+#          path: build/libs/*.jar
+
+      - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
