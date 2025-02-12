@@ -49,24 +49,24 @@ jobs:
       - name: Use Built in Gradle Setup
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.12.1'
+          gradle-version: '8.11'
 
       - name: Grant Execute on Gradle
         run: chmod +x gradlew
 
-      - name: Clean
-        run: gradle clean
+      - name: Gradle - Build
+        run: ./gradlew build
 
-      - name: Test
-        run: gradle test
+      - name: Gradle - Test
+        run: ./gradlew test
 
-      - name: Build
-        run: gradle build
-#
-#      - name: Upload JAR via GitHub Upload Action
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: micronaut-app
-#          path: build/libs/*.jar
+      - name: Notification of Moving Forward to Upload
+        run: echo "Moving to Upload for attempt - ${{github.run_attempt}}"
+
+      - name: Upload JAR via GitHub Upload Action
+        uses: actions/upload-artifact@v4
+        with:
+          name: micronaut-app
+          path: build/libs/*.jar
 
       - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
