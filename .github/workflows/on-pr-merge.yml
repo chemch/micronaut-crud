@@ -48,6 +48,8 @@ jobs:
 
       - name: Use Built in Gradle Setup
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.5'
 
       - name: Grant execute permissions for Gradle Wrapper
         run: chmod +x gradlew
@@ -58,13 +60,4 @@ jobs:
       - name: Build and Test
         run: ./gradlew build
 
-#      - name: Notification of Moving Forward to Upload
-#        run: echo "Moving to Upload for attempt - ${{github.run_attempt}}"
-#
-#      - name: Upload JAR via GitHub Upload Action
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: micronaut-app
-#          path: build/libs/*.jar
-#
-#      - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
+      - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
