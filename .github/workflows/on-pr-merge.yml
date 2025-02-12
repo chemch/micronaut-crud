@@ -44,7 +44,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-
       - run: echo "Moving to Gradle Build for ${{github.base_ref}}"
 
       - name: Use Built in Gradle Setup
@@ -55,8 +54,14 @@ jobs:
       - name: Grant Execute on Gradle
         run: chmod +x gradlew
 
-      - name: Build / Test
-        run: ./gradlew build
+      - name: Clean
+        run: gradle clean
+
+      - name: Test
+        run: gradle test
+
+      - name: Build
+        run: gradle build
 #
 #      - name: Upload JAR via GitHub Upload Action
 #        uses: actions/upload-artifact@v4
