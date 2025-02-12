@@ -13,7 +13,6 @@ on:
 
 jobs:
   build-test-upload:
-    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
 
     services:
@@ -31,12 +30,8 @@ jobs:
           --health-retries=3
 
     steps:
-      - run: echo "Checking out ${{github.repository}} due to ${{github.event}}"
-
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - run: echo "Checking out ${{github.repository}} due to ${{github.event}}"
 
       - name: Prepare Java
         uses: actions/setup-java@v4
@@ -44,20 +39,16 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - run: echo "Moving to Gradle Build for ${{github.base_ref}}"
-
-      - name: Use Built in Gradle Setup
+      - name: Use Built-in Gradle Setup
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '8.5'
+          gradle-version: 'current'  # Ensures Gradle is installed
+
+      - name: Verify Gradle Wrapper Files
+        run: ls -la gradlew || echo "gradlew not found!"
 
       - name: Grant execute permissions for Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Verify Gradle Wrapper Files
-        run: ls -la gradle/wrapper/
-
       - name: Build and Test
         run: ./gradlew build
-
-      - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
