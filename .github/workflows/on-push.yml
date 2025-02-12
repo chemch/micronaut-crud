@@ -1,10 +1,16 @@
-name: cs686-auto-build-test
+name: Run Tests and Build App
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
-  Ack-Push:
+  build:
     runs-on: ubuntu-22.04
 
     steps:
-      - run: echo "Push detected on ${{github.repository}} owned by ${{github.repository_owner}}"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
