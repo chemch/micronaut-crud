@@ -1,0 +1,25 @@
+name: Run Tests and Build App on Merge into Main
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+
+    steps:
+      - run: echo "Merge detected on ${{github.repository}} owned by ${{github.repository_owner}} due to ${{github.event}}"
+
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
