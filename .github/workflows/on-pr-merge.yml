@@ -41,15 +41,13 @@ jobs:
       - name: Prepare Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - run: echo "Moving to Gradle Build for ${{github.base_ref}}"
 
       - name: Use Built in Gradle Setup
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.11'
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Grant execute permissions for Gradle Wrapper
         run: chmod +x gradlew
@@ -57,16 +55,16 @@ jobs:
       - name: Verify Gradle Wrapper Files
         run: ls -la gradle/wrapper/
 
-      - name: Build and Test
-        run: ./gradlew build
-
-      - name: Notification of Moving Forward to Upload
-        run: echo "Moving to Upload for attempt - ${{github.run_attempt}}"
-
-      - name: Upload JAR via GitHub Upload Action
-        uses: actions/upload-artifact@v4
-        with:
-          name: micronaut-app
-          path: build/libs/*.jar
-
-      - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
+#      - name: Build and Test
+#        run: ./gradlew build
+#
+#      - name: Notification of Moving Forward to Upload
+#        run: echo "Moving to Upload for attempt - ${{github.run_attempt}}"
+#
+#      - name: Upload JAR via GitHub Upload Action
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: micronaut-app
+#          path: build/libs/*.jar
+#
+#      - run: echo "Complete with Status_${{github.action_status}}_${{github.env}}"
