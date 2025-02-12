@@ -1,6 +1,9 @@
 name: Echo Variables on Repo Push
 
-on: [push]
+on:
+  push:
+    branches:
+      - jdbc
 
 jobs:
   Ack-Push:

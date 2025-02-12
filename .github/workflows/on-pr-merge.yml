@@ -47,8 +47,14 @@ jobs:
       - name: Verify Gradle Wrapper Files
         run: ls -la gradlew || echo "gradlew not found!"
 
+      - name: Reinstall Gradle Wrapper
+        run: gradle wrapper
+
+      - name: Verify Gradle Wrapper Files Again
+        run: ls -la gradlew || echo "gradlew not found!"
+
       - name: Grant execute permissions for Gradle Wrapper
         run: chmod +x gradlew
 
       - name: Build and Test
-        run: ./gradlew build
+        run: gradlew build
